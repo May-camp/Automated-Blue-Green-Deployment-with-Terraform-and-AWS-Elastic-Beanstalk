@@ -1,19 +1,6 @@
 Automated Blue-Green Deployment with Terraform and AWS Elastic Beanstalk
 This project demonstrates how to automate a Blue-Green Deployment infrastructure using Terraform and AWS Elastic Beanstalk. This strategy allows for zero-downtime updates by deploying a new version (Green) alongside the current production version (Blue) before shifting traffic.
 
-Project Architecture & Directory Structure
-Plaintext
-greenblue/
-├── app-v1/
-│   └── index.html          # Version 1.0 Source Code (BLUE)
-├── app-v2/
-│   └── index.html          # Version 2.0 Source Code (GREEN)
-├── app-v1.zip              # Packaged Build Artifact v1.0
-├── app-v2.zip              # Packaged Build Artifact v2.0
-├── provider.tf             # AWS Provider Configuration
-├── main.tf                 # S3 Bucket & Base EB Application Setup
-├── app_version.tf          # Artifact Uploads & EB Application Versions
-└── environments.tf         # Twin Blue and Green Live Environments
 Step-by-Step Deployment Guide
 Step 1: Create the Project Workspace
 Initialize a single home directory to hold all project components and launch it directly within your local IDE development workspace.
@@ -46,6 +33,8 @@ Step 6: Performing the Blue-Green Routing Swap
 Once the provisioning phase completes, the system generates two individual public endpoint domains—one for your active Blue production stack and one for your Green staging layout.
 
 After running integration quality checks on the updated Green endpoint to verify system behavior, execute an environment URL swap directly from the system console or routing manager. This instantly points incoming end-user traffic over to the Green servers, completing the release with zero application downtime.
+
+For production readiness, the local state file would be migrated to an AWS S3 remote backend with DynamoDB state locking (implemented in my previous infrastructure projects).
 
 Diagram for the project!
 
